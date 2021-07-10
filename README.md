@@ -1,22 +1,22 @@
 # DubMashJSP
 
 ## Caracteristicas Escenciales
-* <ins>Pagina principal</ins> ✔️ 
-* <ins>Inicio de Sesion</ins> ✔️ 
-* <ins>Registro de Usuario</ins> ✔️ 
-* <ins>Perfil y administrasion del mismo</ins> ✔️ 
-* <ins>Pagina Acerda del Proyecto</ins> ✔️ 
-* <ins>Pagina de Contacto</ins> ✔️ 
-* <ins>Descripcion del contenido seleccionado</ins> ✔️ 
-* <ins>Subir contenido </ins> ✔️ 
-* <ins>Revision del contenido cargado</ins> ✔️ 
-* <ins>Busqueda</ins> ✔️ 
-* <ins>Agregar Amigos (Seguir Usuarios)</ins> ✔️ 
-* <ins>Contador de Likes</ins> ✔️ 
+* ~~Pagina principal~~ ✔️ 
+* ~~Inicio de Sesion~~ ✔️ 
+* ~~Registro de Usuario~~ ✔️ 
+* ~~Perfil y administrasion del mismo~~ ✔️ 
+* ~~Pagina Acerda del Proyecto~~ ✔️ 
+* ~~Pagina de Contacto~~ ✔️ 
+* ~~Descripcion del contenido seleccionado~~ ✔️ 
+* ~~Subir contenido ~~ ✔️ 
+* ~~Revision del contenido cargado~~ ✔️ 
+* ~~Busqueda~~ ✔️ 
+* ~~Agregar Amigos (Seguir Usuarios)~~ ✔️ 
+* ~~Contador de Likes~~ ✔️ 
 
 ## Caracteristicas Extras
-* <ins>Agregar Comentarios</ins> ✔️ 
-* <ins>Seguir Temas</ins> ✔️ 
+* ~~Agregar Comentarios~~ ✔️ 
+* ~~Seguir Temas~~ ✔️ 
 * Descubrimiento de contenido ❌
 
 ## Capturas
