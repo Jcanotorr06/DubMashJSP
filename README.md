@@ -20,3 +20,4 @@
 * Descubrimiento de contenido 👀
 
 ## Capturas
+![captura1](capturas/1.png)
