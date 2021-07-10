@@ -17,6 +17,6 @@
 ## Caracteristicas Extras
 * ~~Agregar Comentarios~~ ✔️ 
 * ~~Seguir Temas~~ ✔️ 
-* Descubrimiento de contenido ❌
+* Descubrimiento de contenido 👀
 
 ## Capturas
