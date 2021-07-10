@@ -8,7 +8,7 @@
 * ~~Pagina Acerda del Proyecto~~ ✔️ 
 * ~~Pagina de Contacto~~ ✔️ 
 * ~~Descripcion del contenido seleccionado~~ ✔️ 
-* ~~Subir contenido ~~ ✔️ 
+* ~~Subir Contenido~~ ✔️ 
 * ~~Revision del contenido cargado~~ ✔️ 
 * ~~Busqueda~~ ✔️ 
 * ~~Agregar Amigos (Seguir Usuarios)~~ ✔️ 
