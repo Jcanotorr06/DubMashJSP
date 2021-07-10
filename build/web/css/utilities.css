@@ -1,0 +1,27 @@
+.bg-image{
+    background: url('https://raw.githubusercontent.com/anagabs/Dubmash/master/programa/media/registarusuariofondo.png');
+    background-position: center;
+    background-repeat: repeat;
+}
+
+.pt-6{
+    padding-top: 8rem;
+}
+
+.rounded-5{
+    border-radius: 16px 16px 0 0;
+}
+
+.shadow-cs{
+    -webkit-box-shadow: 0px -2px 6px 5px rgba(0,0,0,0.37); 
+    box-shadow: 0px -2px 6px 5px rgba(0,0,0,0.37);
+}
+
+.h-2{
+    height: 2px;
+}
+
+.max-h-15{
+    max-height: 15rem;
+}
+

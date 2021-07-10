@@ -1,0 +1,101 @@
+.btn-warning:hover{
+    cursor: pointer;
+}
+
+#sidebar-l, #sidebar-r{
+    position: relative;
+}
+
+#sidebar-l{
+    overflow-y: hidden;
+}
+
+#feed, #sidebar-r{
+    overflow-y: scroll;
+}
+
+#feed::-webkit-scrollbar, #sidebar-r::-webkit-scrollbar{
+    display: none;
+}
+
+.h-2{
+    height: 2px;
+}
+
+.position-fixed{
+    width: inherit;
+    max-width: inherit;
+}
+
+.father{
+    position: relative;
+}
+
+.rounded-semicircle-l{
+    border-radius: 50% 0 0 50%;
+}
+
+.rounded-semicircle-r{
+    border-radius: 0 50% 50% 0;
+}
+
+.w-40{
+    width: 40%;
+}
+
+.w-60px{
+    width: 60px;
+}
+
+.w-40px{
+    width: 40px;
+}
+
+.mw-40px{
+    max-width: 2rem;
+}
+
+.w-30px{
+    width: 30px;
+}
+
+
+
+.h-60px{
+    height: 60px;
+}
+
+#user-profile a{
+    color: #000;
+}
+#user-profile a:hover{
+    color: #f0ad4e;
+}
+
+.flair{
+    color: #c8c8c8;
+}
+
+a:hover i{
+    color: #f0ad4e;
+}
+
+.h-30{
+    height: 35%;
+}
+.max-w-100{
+    max-width: 60%;
+}
+
+.max-post-size{
+    max-width: 600px;
+    max-height: 600px;
+}
+
+.max-comments-size{
+    max-height: 250px;
+}
+
+.comments-size{
+    height: 250px;
+}

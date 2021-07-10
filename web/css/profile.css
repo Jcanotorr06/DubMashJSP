@@ -1,0 +1,43 @@
+.w-80px{
+    width: 80px;
+}
+
+.max-h-100{
+    min-height: 100%;
+    object-fit: cover;
+}
+
+
+
+.overlay-parent{
+    position: relative;
+}
+
+.overlay-parent:hover .overlay{
+    opacity: 1;
+}
+
+.overlay-parent:hover{
+    cursor: pointer;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0%;
+    transition: 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-text{
+    color: #000000;
+    text-align: center;
+}
