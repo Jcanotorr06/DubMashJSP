@@ -21,6 +21,8 @@
 
 ## Capturas
 ![captura2](capturas/8.png)
+![captura2](capturas/12.png)
+![captura2](capturas/13.png)
 ![captura2](capturas/9.png)
 ![captura2](capturas/10.png)
 ![captura2](capturas/11.png)
