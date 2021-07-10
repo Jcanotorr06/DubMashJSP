@@ -20,6 +20,10 @@
 * Descubrimiento de contenido 👀
 
 ## Capturas
+![captura2](capturas/8.png)
+![captura2](capturas/9.png)
+![captura2](capturas/10.png)
+![captura2](capturas/11.png)
 ![captura2](capturas/2.png)
 ![captura3](capturas/3.png)
 ![captura4](capturas/4.png)
