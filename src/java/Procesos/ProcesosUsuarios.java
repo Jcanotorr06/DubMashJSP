@@ -8,8 +8,8 @@ package Procesos;
 import Entidades.Usuarios;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ProcesosUsuarios {
         _cn = new Conexion().OpenDb();
     };
     
-    public int CrearUsuario(Usuarios usuario){
+    public int CrearUsuario(Usuarios usuario){ /*INSERTA UN USUARIO EN LA BASE DE DATOS SIEMPRE Y CUANDO EL NOMBRE DE USUARIO O EMAIL NO ESTEN EN USO*/
         int resultado;
         try{
             Statement smtm = _cn.createStatement();
@@ -49,13 +49,14 @@ public class ProcesosUsuarios {
             resultado = 0;
             return resultado;
         }
-        catch(Exception e){
+        catch(SQLException e){
+            System.out.println(e);
             resultado = 2;
         }
         return resultado;
     };
     
-    public Usuarios ValidarInicio(Usuarios usuario){
+    public Usuarios ValidarInicio(Usuarios usuario){/*VALIDA EL INICIO DE SESION*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -82,7 +83,7 @@ public class ProcesosUsuarios {
         return null;
     };
     
-    public Usuarios BuscarPerfil(String usuario){
+    public Usuarios BuscarPerfil(String usuario){/*REGRESA LA INFORMACION DE PERFIL DE UN USUARIO POR SU USERNAME*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -109,7 +110,32 @@ public class ProcesosUsuarios {
         return null;
     };
     
-    public List<Usuarios> BuscarUsuariosSugeridos(String sesId){
+    public Usuarios BuscarPerfilId(int Id_usuario){/*REGRSA LA INFORMACION DE UN USUARIO POR SU ID*/
+        try{
+            Statement smtm = _cn.createStatement();
+            
+            String query = "Call BuscarPerfilId('"+Id_usuario+"')";
+            
+            ResultSet result = smtm.executeQuery(query);
+            while(result.next()){
+                Usuarios respuesta = new Usuarios();
+                respuesta.setId(result.getInt("Id"));
+                respuesta.setNombre(result.getString("Nombre"));
+                respuesta.setUsuario(result.getString("Usuario"));
+                respuesta.setColor(result.getString("Color"));
+                respuesta.setImagen(result.getString("Imagen"));
+                
+                return respuesta;
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+        return null;
+    };
+    
+    public List<Usuarios> BuscarUsuariosSugeridos(String sesId){/*LISTA HASTA 5 USUARIOS QUE NO ESTAN SEGUIDOS POR EL USUARIO EN SESION*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -136,7 +162,7 @@ public class ProcesosUsuarios {
         }
     };
     
-    public int SeguirUsuario(String Id_Usuario_ses, String Id_Usuario_seg){
+    public int SeguirUsuario(String Id_Usuario_ses, String Id_Usuario_seg){/*SIGUE A UN USUARIO*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -152,7 +178,7 @@ public class ProcesosUsuarios {
         }
     };
     
-    public int DejarSeguirUsuario(String Id_Usuario_ses, String Id_Usuario_seg){
+    public int DejarSeguirUsuario(String Id_Usuario_ses, String Id_Usuario_seg){/*PERMITE AL USUARIO EN SESION DEJAR DE SEGUIR A OTRO USUARIO*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -167,7 +193,7 @@ public class ProcesosUsuarios {
         }
     };
     
-    public boolean ValidarUsuarioSeguido(String Id_Usuario_ses, String Id_Usuario_seg){
+    public boolean ValidarUsuarioSeguido(String Id_Usuario_ses, String Id_Usuario_seg){/*VALIDA SI EL USUARIO EN SESION SE ENCUENTRA ENTRE LOS SEGUIDORES DE OTRO USUARIO*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -185,7 +211,7 @@ public class ProcesosUsuarios {
         return false;
     };
     
-    public String BuscarNombreUsuario(int Id){
+    public String BuscarNombreUsuario(int Id){/*REGRESA EL NOMBRE DE UN USUARIO POR SU ID*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -205,47 +231,11 @@ public class ProcesosUsuarios {
         }
     }
     
-    public String BuscarColorUsuario(int Id){
-        try{
-            Statement smtm = _cn.createStatement();
-            
-            String res="";
-            String query = "SELECT Color FROM usuario WHERE Id='"+Id+"';";
-            ResultSet result = smtm.executeQuery(query);
-            
-            while(result.next()){
-                 res = result.getString("Color");
-                return res;
-            }
-            
-            return res;
-        }
-        catch(Exception e){
-            return "";
-        }
-    }
     
-    public String BuscarImagenUsuario(int Id){
-        try{
-            Statement smtm = _cn.createStatement();
-            
-            String res="";
-            String query = "SELECT Imagen FROM usuario WHERE Id='"+Id+"';";
-            ResultSet result = smtm.executeQuery(query);
-            
-            while(result.next()){
-                 res = result.getString("Imagen");
-                return res;
-            }
-            
-            return res;
-        }
-        catch(Exception e){
-            return "";
-        }
-    }
     
-    public int EditarPerfil(String sesId, String Color, String Imagen){
+ 
+    
+    public int EditarPerfil(String sesId, String Color, String Imagen){/*ACTUALIZA LA IMAGEN Y EL COLOR DE PERFIL DEL USUARIO EN SESION*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -260,7 +250,7 @@ public class ProcesosUsuarios {
         }
     };
     
-    public List<Usuarios> BuscarUsuariosLike(int memeId){
+    public List<Usuarios> BuscarUsuariosLike(int memeId){/*REGRESA UNA LISTA DE USUARIOS QUE HAN DADO LIKE A UN MEME*/
         try{
             List<Usuarios> likes = new ArrayList<>();
             Statement smtm = _cn.createStatement();
@@ -284,7 +274,7 @@ public class ProcesosUsuarios {
         }
     }
     
-    public List<String>BuscarTodosUsuarios(){
+    public List<String>BuscarTodosUsuarios(){ /*REGRESA UNA LISTA CON TODOS LOS USUARIOS EN LA BASE DE DATOS*/
         try{
             Statement smtm = _cn.createStatement();
             

@@ -24,39 +24,13 @@ public class ProcesosTemas {
         _cn = new Conexion().OpenDb();
     };
     
-    public List<Temas> BuscarTemasSugeridos(String sesId){
-        try{
-            Statement smtm = _cn.createStatement();
-            
-            String query = "CALL BuscarTemasSugeridos('"+sesId+"')";
-            
-            List<Temas> sugeridos = new ArrayList<>();
-            
-            ResultSet result = smtm.executeQuery(query);
-            
-            while(result.next()){
-                Temas tema = new Temas();
-                tema.setId(result.getInt("Id"));
-                tema.setNombre(result.getString("Nombre"));
-                tema.setURL_Imagen(result.getString("URL_Imagen"));
-                
-                sugeridos.add(tema);
-            }
-            
-            return sugeridos;
-        }
-        catch(Exception e){
-            return null;
-        }
-    };
-    
-    public List<Temas> ListarTemas(){
+    public List<Temas> ListarTemas(){//LISTA TODOS LOS TEMAS EN LA BASE DE DATOS
         try{
             Statement smtm = _cn.createStatement();
             
             List<Temas> temas = new ArrayList<>();
             
-            ResultSet result = smtm.executeQuery("SELECT * FROM tema");
+            ResultSet result = smtm.executeQuery("SELECT * FROM tema ORDER BY Id;");
             
             while(result.next()){
                 Temas tema = new Temas();
@@ -75,7 +49,7 @@ public class ProcesosTemas {
         }
     }
     
-    public int SeguirTema(String Id_Usuario, String Id_Tema){
+    public int SeguirTema(String Id_Usuario, String Id_Tema){//PERMITE AL USUARIO EN SESION SEGUIR UN TEMA
         try{
             Statement smtm = _cn.createStatement();
             String query = "CALL SeguirTema('"+Id_Usuario+"','"+Id_Tema+"')";
@@ -89,7 +63,7 @@ public class ProcesosTemas {
         }
     };
     
-    public int DejarSeguirTema(String Id_Usuario, String Id_Tema){
+    public int DejarSeguirTema(String Id_Usuario, String Id_Tema){//PERMITE AL USUARIO EN SESION DEJAR DE SEGUIR UN TEMA
         try{
             Statement smtm = _cn.createStatement();
             String query = "CALL DejarSeguirTema('"+Id_Usuario+"','"+Id_Tema+"')";
@@ -104,7 +78,7 @@ public class ProcesosTemas {
         }
     }
     
-    public boolean ValidarTemaSeguido(String Id_Usuario, int Id_Tema){
+    public boolean ValidarTemaSeguido(String Id_Usuario, int Id_Tema){//VALIDA SI EL TEMA ES SEGUIDO POR EL USUARIO EN SESION
         try{
             Statement smtm = _cn.createStatement();
             String query = "CALL ValidarTemaSeguido('"+Id_Usuario+"','"+Id_Tema+"')";
@@ -122,7 +96,7 @@ public class ProcesosTemas {
         return false;
     }
     
-    public String BuscarNombreTema(int Id){
+    public String BuscarNombreTema(int Id){//REGRESA EL NOMRBE DE UN TEMA
         try{
             Statement smtm = _cn.createStatement();
             
@@ -142,7 +116,7 @@ public class ProcesosTemas {
         }
     };
     
-    public Temas BuscarTema(int Id){
+    public Temas BuscarTema(int Id){//REGRESA UN OBJETO CON LA INFORMACION DE UN TEMA
         try{
             Statement smtm = _cn.createStatement();
             

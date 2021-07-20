@@ -18,8 +18,8 @@
         
         ProcesosUsuarios usuariosdb = new ProcesosUsuarios();
         
-        int nuevoUsuario = usuariosdb.CrearUsuario(usuario);
-        response.sendRedirect("../index.jsp?res="+nuevoUsuario);
+        int res = usuariosdb.CrearUsuario(usuario);
+        response.sendRedirect("../index.jsp?res="+res);
         return;
     }
     catch(Exception e){

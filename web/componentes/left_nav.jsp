@@ -3,7 +3,12 @@
     Created on : 6 jul. 2021, 14:11:13
     Author     : Joseph Cano
 --%>
-
+<%!
+    String path;
+%>
+<%
+    path=request.getServletPath().toString().substring(1);
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-3 border p-0" id="sidebar-l">
     <div class="position-fixed h-100 py-2">
@@ -29,10 +34,10 @@
 
 
         <div class="w-100 py-3 ps-4" id="tabs">
-            <a href="/feed.jsp" class="tab w-100 py-2 d-flex">
+            <a href="/feed.jsp" class="tab w-100 py-2 d-flex <%if(path.equals("feed.jsp")){%>text-yellow align-items-center border-end border-5 border-warning<%}%>">
                 <div class="tab-icon">
                     <h2>
-                        <i class="bi bi-house-door-fill"></i>
+                        <i class="bi bi-house-door-fill <%if(path.equals("feed.jsp")){%>text-yellow<%}%>"></i>
                     </h2>
                 </div>
                 <div class="ps-3 tab-text">
@@ -40,11 +45,11 @@
                 </div>
             </a>
 
-            <div class="tab w-100 py-2 d-flex">
-                <a href="" class="d-flex align-items-center">
+            <div class="tab w-100 py-2 d-flex <%if(path.equals("discover.jsp")){%>text-yellow align-items-center border-end border-5 border-warning<%}%>">
+                <a href="discover.jsp" class="d-flex align-items-center <%if(path.equals("discover.jsp")){%>text-yellow<%}%>">
                     <div class="tab-icon">
                         <h2>
-                            <i class="bi bi-compass-fill"></i>
+                            <i class="bi bi-compass-fill <%if(path.equals("discover.jsp")){%>text-yellow<%}%>"></i>
                         </h2>
                     </div>
                     <div class="ps-3 tab-text">

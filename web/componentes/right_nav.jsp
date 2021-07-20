@@ -18,7 +18,7 @@
     ProcesosUsuarios usuariosdb = new ProcesosUsuarios();
     ProcesosTemas temasdb = new ProcesosTemas();
     usuarios_sugeridos = usuariosdb.BuscarUsuariosSugeridos(sesId);
-    temas_sugeridos = temasdb.BuscarTemasSugeridos(sesId);
+    temas_sugeridos = temasdb.ListarTemas();
     
 %>
 <div class="col-3 border p-0" id="sidebar-r">
@@ -64,7 +64,7 @@
                     <img class="image-fluid mw-40px rounded-3" src="<%=sugerido.getURL_Imagen()%>" alt="">
                 </a>
                 <div class="d-flex justify-content-between align-items-center w-100 h-100 px-3 suggested-topic">
-                    <a href="#">
+                    <a href="topic.jsp?tema=<%=sugerido.getId()%>">
                         <h6><%=sugerido.getNombre()%></h6>
                     </a>
                         <%if(sugerido.isSeguido()){%>

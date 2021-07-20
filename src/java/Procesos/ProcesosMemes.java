@@ -26,7 +26,7 @@ public class ProcesosMemes {
         _cn = new Conexion().OpenDb();
     };
     
-    public int SubirMeme(Memes meme){
+    public int SubirMeme(Memes meme){ /*INSERTA UN MEME A LA BASE DE DATOS*/
         try{
             Statement smtm = _cn.createStatement();
             String query = "INSERT INTO publicacion (Titulo, Imagen, Id_Usuario, Id_Tema) VALUES('"+meme.getTitulo()+"','"+meme.getImagen()+"','"+meme.getId_Usuario()+"','"+meme.getId_Tema()+"');";
@@ -41,7 +41,7 @@ public class ProcesosMemes {
         }
     };
     
-    public List<Memes> BuscarMemesUsuario(int Usuario_Id, String Usuario){
+    public List<Memes> BuscarMemesUsuario(int Usuario_Id, String Usuario){/*REGRESA UNA LISTA CON LOS MEMES DE UN USUARIO*/
         try{
             Statement smtm = _cn.createStatement();
             String query = "CALL BuscarMemesUsuario('"+Usuario_Id+"')";
@@ -59,7 +59,7 @@ public class ProcesosMemes {
                 meme.setImagen(result.getString("Imagen"));
                 meme.setId_Usuario(result.getInt("Id_Usuario"));
                 meme.setId_Tema(result.getInt("Id_Tema"));
-                meme.setUsuario(usuariosdb.BuscarPerfil(Usuario));
+                meme.setUsuario(usuariosdb.BuscarPerfilId(Usuario_Id));
                 meme.setTema(temasdb.BuscarTema(result.getInt("Id_Tema")));
                 meme.setComentarios(comentariosdb.BuscarComentarios(meme.getId()));
                 meme.setLikes_Usuarios(usuariosdb.BuscarUsuariosLike(meme.getId()));
@@ -76,7 +76,7 @@ public class ProcesosMemes {
         }
     }
     
-   public List<Memes> BuscarMemesUsuariosSeguidos(String sesId){
+   public List<Memes> BuscarMemesUsuariosSeguidos(String sesId){/*REGRESA UNA LISTA CON LOS MEMES DE TODOS LOS USUARIOS SEGUIDOS POR EL USUARIO EN SESION*/
         try{
             Statement smtm = _cn.createStatement();
             
@@ -120,8 +120,53 @@ public class ProcesosMemes {
             return null;
         }
     }
+    
+   public List<Memes> BuscarMemesTemasSeguidos(String sesId){/*REGRESA UNA LISTA DE MEMES DE LOS TEMAS SEGUIDOS POR EL USUARIO EN SESION*/
+        try{
+            Statement smtm = _cn.createStatement();
+            
+            List<Memes> memes = new ArrayList();
+            ProcesosComentarios comentariosdb = new ProcesosComentarios();
+            ProcesosUsuarios usuariosdb = new ProcesosUsuarios();
+            
+            String query = "CALL BuscarMemesTemasSeguidos('"+sesId+"')";
+            ResultSet result = smtm.executeQuery(query);
+            
+            while(result.next()){
+                Usuarios usuario = new Usuarios();
+                usuario.setId(result.getInt("Id_Usuario"));
+                usuario.setColor(result.getString("Color"));
+                usuario.setUsuario(result.getString("Usuario"));
+                usuario.setImagen(result.getString("Imagen_Usuario"));
+                
+                Temas tema = new Temas();
+                tema.setId(result.getInt("Id_Tema"));
+                tema.setNombre(result.getString("Nombre_Tema"));
+                
+                Memes meme = new Memes();
+                meme.setId(result.getInt("Id"));
+                meme.setTitulo(result.getString("Titulo"));
+                meme.setImagen(result.getString("Imagen"));
+                meme.setId_Tema(tema.getId());
+                meme.setId_Usuario(usuario.getId());
+                meme.setUsuario(usuario);
+                meme.setTema(tema);
+                meme.setComentarios(comentariosdb.BuscarComentarios(meme.getId()));
+                meme.setLikes_Usuarios(usuariosdb.BuscarUsuariosLike(meme.getId()));
+                meme.setLikes(meme.getLikes_Usuarios().size());
+                
+                memes.add(meme);
+            }
+            
+            return memes;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
+        }
+    }
    
-    public int LikeMeme(String sesId, String memeId){
+    public int LikeMeme(String sesId, String memeId){/*INSERTA UN LIKE EN LA BASE DE DATOS AL MEME SELECCIONADO POR EL USUARIO EN SESION*/
         try{
             Statement smtm = _cn.createStatement();
             String query = "INSERT INTO likes VALUES ('"+sesId+"','"+memeId+"');";
@@ -136,7 +181,7 @@ public class ProcesosMemes {
         }
     }
     
-    public boolean ValidarLike(String sesId, List<Usuarios> usuarios){
+    public boolean ValidarLike(String sesId, List<Usuarios> usuarios){/*VALIDA SI EL USUAIRO EN SESION HA DADO LIKE AL MEME*/
         try{
             for(Usuarios usuario:usuarios){
                 if(usuario.getId() == Integer.parseInt(sesId)){
@@ -147,6 +192,41 @@ public class ProcesosMemes {
         }
         catch(Exception e){
             return false;
+        }
+    }
+    
+        public List<Memes> BuscarMemesTema(String Tema_Id){ /*LISTA TODOS LOS MEMES DE UN TEMA*/
+        try{
+            Statement smtm = _cn.createStatement();
+            String query = "SELECT * FROM publicacion WHERE Id_Tema="+"'"+Tema_Id+"';";
+            
+            List<Memes> memes = new ArrayList<>();
+            ProcesosUsuarios usuariosdb = new ProcesosUsuarios();
+            ProcesosTemas temasdb = new ProcesosTemas();
+            ProcesosComentarios comentariosdb = new ProcesosComentarios();
+            
+            ResultSet result = smtm.executeQuery(query);
+            while(result.next()){
+                Memes meme = new Memes();
+                meme.setId(result.getInt("Id"));
+                meme.setTitulo(result.getString("Titulo"));
+                meme.setImagen(result.getString("Imagen"));
+                meme.setId_Usuario(result.getInt("Id_Usuario"));
+                meme.setId_Tema(result.getInt("Id_Tema"));
+                meme.setUsuario(usuariosdb.BuscarPerfilId(meme.getId_Usuario()));
+                meme.setTema(temasdb.BuscarTema(result.getInt("Id_Tema")));
+                meme.setComentarios(comentariosdb.BuscarComentarios(meme.getId()));
+                meme.setLikes_Usuarios(usuariosdb.BuscarUsuariosLike(meme.getId()));
+                meme.setLikes(meme.getLikes_Usuarios().size());
+                
+                
+                memes.add(meme);
+            }
+            return memes;
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            return null;
         }
     }
 }

@@ -23,7 +23,7 @@ public class ProcesosPerfiles {
         _cn = new Conexion().OpenDb();
     };
     
-    public Perfiles BuscarPerfil(String Usuario){
+    public Perfiles BuscarPerfil(String Usuario){//REGRESA TODO EL CONTENIDO DE UN PERFIL INCLUYENDO MEMES, INFORMACION, IMAGEN, ETC
         try{
             Perfiles perfil = new Perfiles();
             ProcesosUsuarios usuariosdb = new ProcesosUsuarios();
