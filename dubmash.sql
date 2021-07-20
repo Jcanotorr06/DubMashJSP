@@ -16,6 +16,22 @@
 CREATE DATABASE IF NOT EXISTS `dubmash` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `dubmash`;
 
+-- Dumping structure for procedure dubmash.BuscarMemesTemasSeguidos
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarMemesTemasSeguidos`(
+	IN `Id_Usuario_ses` INT
+)
+BEGIN
+	SELECT
+		pub.Id, pub.Titulo, pub.Imagen, usu.Id AS 'Id_Usuario', usu.Usuario, usu.Color, usu.Imagen AS 'Imagen_Usuario', tem.Id AS 'Id_Tema', tem.Nombre AS 'Nombre_Tema'
+	FROM tema_seguido AS temseg
+	JOIN usuario AS usu ON temseg.Id_Usuario = usu.Id
+	JOIN publicacion AS pub on temseg.Id_Tema = pub.Id_Tema
+	JOIN tema AS tem ON tem.Id = pub.Id_Tema
+	WHERE temseg.Id_Usuario = Id_Usuario_ses;
+END//
+DELIMITER ;
+
 -- Dumping structure for procedure dubmash.BuscarMemesUsuario
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarMemesUsuario`(
@@ -34,6 +50,7 @@ DELIMITER ;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarMemesUsuariosSeguidos`(
 	IN `Id_Usuario_ses` INT
+
 )
 BEGIN
 	SELECT
@@ -42,7 +59,8 @@ BEGIN
 	JOIN usuario AS usu ON useg.Id_Seguido = usu.Id
 	JOIN publicacion AS pub on usu.Id = pub.Id_Usuario
 	JOIN tema AS tem ON tem.Id = pub.Id_Tema
-	WHERE useg.Id_Usuario = Id_Usuario_ses;
+	WHERE useg.Id_Usuario = Id_Usuario_ses
+	OR usu.Id = Id_Usuario_ses;
 END//
 DELIMITER ;
 
@@ -67,6 +85,19 @@ BEGIN
 			Id, Nombre,Usuario, Imagen, Color, Seguidores, Seguidos, Publicaciones
 		From usuario
 	WHERE Usuario = Nombre_Usuario;
+END//
+DELIMITER ;
+
+-- Dumping structure for procedure dubmash.BuscarPerfilId
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarPerfilId`(
+	IN `Id_Usuario` INT
+)
+BEGIN
+	Select 
+			Id, Nombre,Usuario, Imagen, Color
+		From usuario
+	WHERE Id = Id_Usuario;
 END//
 DELIMITER ;
 
@@ -270,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `likes` (
   CONSTRAINT `Like_Id_Usuario_FK` FOREIGN KEY (`Id_Usuario`) REFERENCES `usuario` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table dubmash.likes: ~3 rows (approximately)
+-- Dumping data for table dubmash.likes: ~2 rows (approximately)
 /*!40000 ALTER TABLE `likes` DISABLE KEYS */;
 INSERT INTO `likes` (`Id_Usuario`, `Id_Meme`) VALUES
 	(1, 3),
@@ -292,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `publicacion` (
   CONSTRAINT `Publicacion_Id_Usuario_FK` FOREIGN KEY (`Id_Usuario`) REFERENCES `usuario` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table dubmash.publicacion: ~3 rows (approximately)
+-- Dumping data for table dubmash.publicacion: ~2 rows (approximately)
 /*!40000 ALTER TABLE `publicacion` DISABLE KEYS */;
 INSERT INTO `publicacion` (`Id`, `Titulo`, `Imagen`, `Id_Usuario`, `Id_Tema`) VALUES
 	(1, 'MEME PRUEBA', 'https://i.redd.it/2xige1iiiz971.jpg', 1, 5),
@@ -333,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `tema` (
   UNIQUE KEY `Nombre` (`Nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table dubmash.tema: ~13 rows (approximately)
+-- Dumping data for table dubmash.tema: ~12 rows (approximately)
 /*!40000 ALTER TABLE `tema` DISABLE KEYS */;
 INSERT INTO `tema` (`Id`, `Nombre`, `URL_Imagen`) VALUES
 	(1, 'Gracioso', 'https://miscmedia-9gag-fun.9cache.com/images/thumbnail-facebook/1557376304.186_U5U7u5_100x100wp.webp'),
@@ -361,11 +392,13 @@ CREATE TABLE IF NOT EXISTS `tema_seguido` (
   CONSTRAINT `Tema_Seguido_Id_Usuario_FK` FOREIGN KEY (`Id_Usuario`) REFERENCES `usuario` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table dubmash.tema_seguido: ~2 rows (approximately)
+-- Dumping data for table dubmash.tema_seguido: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tema_seguido` DISABLE KEYS */;
 INSERT INTO `tema_seguido` (`Id_Usuario`, `Id_Tema`) VALUES
 	(1, 2),
-	(1, 3);
+	(1, 3),
+	(1, 5),
+	(1, 11);
 /*!40000 ALTER TABLE `tema_seguido` ENABLE KEYS */;
 
 -- Dumping structure for table dubmash.usuario
@@ -383,7 +416,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
--- Dumping data for table dubmash.usuario: ~10 rows (approximately)
+-- Dumping data for table dubmash.usuario: ~9 rows (approximately)
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`Id`, `Nombre`, `Usuario`, `Email`, `Contraseña`, `Nacimiento`, `Color`, `Imagen`) VALUES
 	(1, 'Administrador', 'admin', 'admin@dubmash.com', 'password', '1900-12-31', '#8C00FF', 'https://static-cdn.jtvnw.net/jtv_user_pictures/997615a1-351b-425f-9ca9-380b87fa9d6d-profile_image-600x600.png'),
