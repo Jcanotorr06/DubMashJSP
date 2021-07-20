@@ -18,7 +18,7 @@
 ## Caracteristicas Extras
 * ~~Agregar Comentarios~~ ✔️ 
 * ~~Seguir Temas~~ ✔️ 
-* ~~Descubrimiento de contenido~
+* ~~Descubrimiento de contenido~~
 
 ## Capturas
 ![captura2](capturas/8.png)
