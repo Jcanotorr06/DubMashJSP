@@ -38,6 +38,6 @@ $(document).ready(function(){
         container: 'body',
         animation: false,
         html: true,
-        content: '<a href="about.html" class="list-group-item list-group-item-action">Acerca de</a><a href="contact.html" class="list-group-item list-group-item-action">Contacto</a> <a href="faq.html" class="list-group-item list-group-item-action">FAQ</a><a href="#" class="list-group-item list-group-item-action">Repositorio</a>'
+        content: '<a href="about.html" class="list-group-item list-group-item-action">Acerca de</a><a href="contact.html" class="list-group-item list-group-item-action">Contacto</a> <a href="faq.html" class="list-group-item list-group-item-action">FAQ</a><a href="https://github.com/Jcanotorr06/DubMashJSP" class="list-group-item list-group-item-action">Repositorio</a>'
     });   
 });
