@@ -20,14 +20,15 @@ USE `dubmash`;
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarMemesTemasSeguidos`(
 	IN `Id_Usuario_ses` INT
+
 )
 BEGIN
 	SELECT
 		pub.Id, pub.Titulo, pub.Imagen, usu.Id AS 'Id_Usuario', usu.Usuario, usu.Color, usu.Imagen AS 'Imagen_Usuario', tem.Id AS 'Id_Tema', tem.Nombre AS 'Nombre_Tema'
 	FROM tema_seguido AS temseg
-	JOIN usuario AS usu ON temseg.Id_Usuario = usu.Id
 	JOIN publicacion AS pub on temseg.Id_Tema = pub.Id_Tema
 	JOIN tema AS tem ON tem.Id = pub.Id_Tema
+	JOIN usuario as usu on usu.Id = pub.Id_Usuario
 	WHERE temseg.Id_Usuario = Id_Usuario_ses;
 END//
 DELIMITER ;
@@ -218,15 +219,16 @@ CREATE TABLE IF NOT EXISTS `comentario` (
   KEY `Comentario_Id_Meme_FK` (`Id_Meme`),
   CONSTRAINT `Comentario_Id_Meme_FK` FOREIGN KEY (`Id_Meme`) REFERENCES `publicacion` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Comentario_Id_Usuario_FK` FOREIGN KEY (`Id_Usuario`) REFERENCES `usuario` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table dubmash.comentario: ~4 rows (approximately)
+-- Dumping data for table dubmash.comentario: ~5 rows (approximately)
 /*!40000 ALTER TABLE `comentario` DISABLE KEYS */;
 INSERT INTO `comentario` (`Id`, `Comentario`, `Id_Usuario`, `Id_Meme`) VALUES
 	(1, 'comentario de prueba 1', 1, 2),
 	(3, 'comentario de prueba 2', 1, 2),
 	(4, 'comentario de prueba 3', 9, 2),
-	(5, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 9, 1);
+	(5, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 9, 1),
+	(6, 'NOOOOOOO', 1, 3);
 /*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
 
 -- Dumping structure for procedure dubmash.DejarSeguirTema
@@ -392,13 +394,14 @@ CREATE TABLE IF NOT EXISTS `tema_seguido` (
   CONSTRAINT `Tema_Seguido_Id_Usuario_FK` FOREIGN KEY (`Id_Usuario`) REFERENCES `usuario` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table dubmash.tema_seguido: ~3 rows (approximately)
+-- Dumping data for table dubmash.tema_seguido: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tema_seguido` DISABLE KEYS */;
 INSERT INTO `tema_seguido` (`Id_Usuario`, `Id_Tema`) VALUES
 	(1, 2),
 	(1, 3),
 	(1, 5),
-	(1, 11);
+	(1, 11),
+	(15, 6);
 /*!40000 ALTER TABLE `tema_seguido` ENABLE KEYS */;
 
 -- Dumping structure for table dubmash.usuario
@@ -419,7 +422,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Dumping data for table dubmash.usuario: ~9 rows (approximately)
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`Id`, `Nombre`, `Usuario`, `Email`, `Contraseña`, `Nacimiento`, `Color`, `Imagen`) VALUES
-	(1, 'Administrador', 'admin', 'admin@dubmash.com', 'password', '1900-12-31', '#8C00FF', 'https://static-cdn.jtvnw.net/jtv_user_pictures/997615a1-351b-425f-9ca9-380b87fa9d6d-profile_image-600x600.png'),
+	(1, 'Administrador', 'admin', 'admin@dubmash.com', 'password', '1900-12-31', '#9900FF', 'https://static-cdn.jtvnw.net/jtv_user_pictures/997615a1-351b-425f-9ca9-380b87fa9d6d-profile_image-600x600.png'),
 	(8, 'Prueba 7', 'prueba7', 'prueba7@dubmash.com', 'password', '2001-06-20', '#0000FF', 'https://raw.githubusercontent.com/Jcanotorr06/RedSocial-Memes/main/media/default_duck.jpg'),
 	(9, 'Prueba8', 'prueba8', 'prueba8@dubmash.com', 'password', '2001-06-20', '#FF6F00', 'https://mir-s3-cdn-cf.behance.net/project_modules/disp/dd642260673917.5a5603488c6f3.jpg'),
 	(10, 'Prueba9', 'prueba9', 'prueba9@dubmash.com', 'password', '2001-06-20', '#0000FF', 'https://raw.githubusercontent.com/Jcanotorr06/RedSocial-Memes/main/media/default_duck.jpg'),
